@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block head_title %}
+Buildings
+{% endblock head_title %}
+{% block content %}
+
+<div class="row text-center">
+    <div class="col">
+        <h1> Buildings List </h1>
+    </div>
+</div>
+<div class='row' id=DesignApp>
+    Loading...
+</div>
+<script>
+    const DesignElement = document.getElementById("DesignApp")
+    //DesignElement.innerHTML = 'Loading...'
+    const xhr = new XMLHttpRequest()
+    const method = "GET"
+    const url = "/BuildingsList"
+    const responsetype = "json"
+    function handleDidRun(Design_id2, currentcount) {
+        console.log(Design_id2, currentcount)
+
+    }
+    
+    function formatDesignElement(DesignItem) {
+
+        var formatted = "<div class = 'col-12 col-md-10 mx-auto border py-3 mb-4 Design' id = 'Design-" + DesignItem.Description
+            + "'><p>" + DesignItem.Height +
+            "</p><div class ='btn-group'>" + DesignItem.Area +
+            "</div></div>"
+        return formatted
+
+    }
+    xhr.responseType = responsetype
+    xhr.open(method, url)
+    xhr.onload = function () {
+
+        const serverresponse = xhr.response
+        const listedItems = serverresponse.List2
+        var final = ""
+        var i;
+        for (i = 0; i < listedItems.length; i++) {
+
+            var current = formatDesignElement(listedItems[i])
+            final += current
+        }
+        DesignElement.innerHTML = final
+        console.log(xhr.response)
+    }
+    xhr.send()
+</script>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block head_title %}
+Home
+{% endblock head_title %}
+{% block content %}
+
+<div class="row text-center">
+    <div class="col">
+        <h1> Welcome to DesignApp </h1>
+    </div>
+</div>
+<div class='row' id=DesignApp>
+    Loading...
+</div>
+<script>
+    const DesignElement = document.getElementById("DesignApp")
+    //DesignElement.innerHTML = 'Loading...'
+    const xhr = new XMLHttpRequest()
+    const method = "GET"
+    const url = "/Users"
+    const responsetype = "json"
+    function handleDidRun(Design_id,currentcount){
+        console.log(Design_id,currentcount)
+
+    }
+    function RunButton(DesignItem){
+        return "<button class = 'btn btn-primary' onclick=handleDidRun("+DesignItem.id+","+DesignItem.Runs+")>Run</button>"
+    }
+    function formatDesignElement(DesignItem){
+
+        var formatted = "<div class = 'col-12 col-md-10 mx-auto border py-3 mb-4 Design' id = 'Design-" + DesignItem.id 
+        + "'><p>" + DesignItem.Type + 
+            "</p><div class ='btn-group'>"+  RunButton(DesignItem) +
+            "</div></div>"
+        return formatted
+
+    }
+    xhr.responseType = responsetype
+    xhr.open(method,url)
+    xhr.onload = function(){
+        
+        const serverresponse = xhr.response
+        const listedItems = serverresponse.List
+        var final = ""
+        var i;
+        for(i = 0;i<listedItems.length;i++){
+          
+            var current = formatDesignElement(listedItems[i])
+            final += current
+        }
+        DesignElement.innerHTML = final
+        console.log(xhr.response)
+    }
+    xhr.send()
+</script>
+{% endblock content %}
