@@ -9,6 +9,8 @@ Home
         <h1> Welcome to DesignApp </h1>
     </div>
 </div>
+
+
 <div class='row' id=DesignApp>
     Loading...
 </div>
@@ -24,10 +26,19 @@ Home
 
     }
     function RunButton(DesignItem){
-        return "<button class = 'btn btn-primary' onclick=handleDidRun("+DesignItem.id+","+DesignItem.Runs+")>Run</button>"
+        
+        if(DesignItem.Type=="School")
+        {
+            return "<a class = 'btn btn-primary' href = 'formschool/' role = 'button'  onclick=handleDidRun(" + DesignItem.id + "," + DesignItem.Runs + ")>Run</a>" 
+        }
+        else 
+        {
+            return "<a class = 'btn btn-primary' href = 'formhouse/' role = 'button'  onclick=handleDidRun(" + DesignItem.id + "," + DesignItem.Runs + ")>Run</a>"
+        }
+                
     }
     function formatDesignElement(DesignItem){
-
+        console.log(DesignItem.Type)
         var formatted = "<div class = 'col-12 col-md-10 mx-auto border py-3 mb-4 Design' id = 'Design-" + DesignItem.id 
         + "'><p>" + DesignItem.Type + 
             "</p><div class ='btn-group'>"+  RunButton(DesignItem) +

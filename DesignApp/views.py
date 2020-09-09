@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse,Http404,JsonResponse
 from django.db import models
 from DesignApp.models import User_Details,Building_Details
-from .forms import BuildingForm
+from .formschool import SchoolForm
+from .formhouse import HouseForm
 import random
 def home_view(request,*args,**kwargs):
     #return HttpResponse("<h1>Hello World</h1>")
@@ -29,14 +30,24 @@ def BuildingList_view(request, *args, **kwargs):
     }
     return JsonResponse(data)
 
-def BuildingCreateView(request,*args, **kwargs):
+def SchoolCreateView(request,*args, **kwargs):
 
-    form = BuildingForm(request.POST or None)
+    form = SchoolForm(request.POST or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
-        form = BuildingForm()
-    return render(request,'components/forms.html',context={"form":form})
+        form = SchoolForm()
+    return render(request,"./components/formschool.html",context={"form":form})
+
+
+def HouseCreateView(request, *args, **kwargs):
+
+    form = HouseForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        form = HouseForm()
+    return render(request, "./components/formhouse.html", context={"form": form})
 
 
 def DesignApp_view(request,user_id,*args,**kwargs):
